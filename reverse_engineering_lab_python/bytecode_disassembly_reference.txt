@@ -1,0 +1,162 @@
+  0           RESUME                   0
+
+  2           LOAD_CONST               0 ('\nReverse Engineering Lab: Authentication Demo\nFor educational reverse-engineering practice only.\n\nThis deliberately insecure demo embeds credentials in the program so learners\ncan inspect Python bytecode and compare it with the source. Never use this\npattern for real authentication.\n')
+              STORE_NAME               0 (__doc__)
+
+ 10           LOAD_CONST               1 (0)
+              LOAD_CONST               2 (('getpass',))
+              IMPORT_NAME              1 (getpass)
+              IMPORT_FROM              1 (getpass)
+              STORE_NAME               1 (getpass)
+              POP_TOP
+
+ 13           LOAD_CONST               3 ('username')
+              LOAD_NAME                2 (str)
+              LOAD_CONST               4 ('password')
+              LOAD_NAME                2 (str)
+              LOAD_CONST               5 ('return')
+              LOAD_NAME                3 (bool)
+              BUILD_TUPLE              6
+              LOAD_CONST               6 (<code object validate_credentials at 0x7f7b7428c0c0, file "/mnt/data/reverse_engineering_lab_python/demo_auth.py", line 13>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE   4 (annotations)
+              STORE_NAME               4 (validate_credentials)
+
+ 30           LOAD_CONST               7 ('valid')
+              LOAD_NAME                3 (bool)
+              LOAD_CONST               5 ('return')
+              LOAD_CONST               8 (None)
+              BUILD_TUPLE              4
+              LOAD_CONST               9 (<code object show_result at 0x7f7b7428d4c0, file "/mnt/data/reverse_engineering_lab_python/demo_auth.py", line 30>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE   4 (annotations)
+              STORE_NAME               5 (show_result)
+
+ 38           LOAD_CONST               5 ('return')
+              LOAD_NAME                6 (int)
+              BUILD_TUPLE              2
+              LOAD_CONST              10 (<code object main at 0x7f7b74380200, file "/mnt/data/reverse_engineering_lab_python/demo_auth.py", line 38>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE   4 (annotations)
+              STORE_NAME               7 (main)
+
+ 48           LOAD_NAME                8 (__name__)
+              LOAD_CONST              11 ('__main__')
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_FALSE       13 (to L1)
+
+ 49           LOAD_NAME                9 (SystemExit)
+              PUSH_NULL
+              LOAD_NAME                7 (main)
+              PUSH_NULL
+              CALL                     0
+              CALL                     1
+              RAISE_VARARGS            1
+
+ 48   L1:     RETURN_CONST             8 (None)
+
+Disassembly of <code object validate_credentials at 0x7f7b7428c0c0, file "/mnt/data/reverse_engineering_lab_python/demo_auth.py", line 13>:
+ 13           RESUME                   0
+
+ 15           LOAD_GLOBAL              1 (len + NULL)
+              LOAD_FAST                0 (username)
+              CALL                     1
+              LOAD_CONST               1 (2)
+              COMPARE_OP              58 (bool(<=))
+              POP_JUMP_IF_FALSE        1 (to L1)
+
+ 16           RETURN_CONST             2 (False)
+
+ 17   L1:     LOAD_GLOBAL              1 (len + NULL)
+              LOAD_FAST                1 (password)
+              CALL                     1
+              LOAD_CONST               3 (7)
+              COMPARE_OP              58 (bool(<=))
+              POP_JUMP_IF_FALSE        1 (to L2)
+
+ 18           RETURN_CONST             2 (False)
+
+ 20   L2:     LOAD_CONST               4 ('melisa')
+              STORE_FAST               2 (expected_username)
+
+ 21           LOAD_CONST               5 ('blue-orbit-42')
+              STORE_FAST               3 (expected_password)
+
+ 23           LOAD_FAST_LOAD_FAST      2 (username, expected_username)
+              COMPARE_OP             119 (bool(!=))
+              POP_JUMP_IF_FALSE        1 (to L3)
+
+ 24           RETURN_CONST             2 (False)
+
+ 25   L3:     LOAD_FAST_LOAD_FAST     19 (password, expected_password)
+              COMPARE_OP             119 (bool(!=))
+              POP_JUMP_IF_FALSE        1 (to L4)
+
+ 26           RETURN_CONST             2 (False)
+
+ 27   L4:     RETURN_CONST             6 (True)
+
+Disassembly of <code object show_result at 0x7f7b7428d4c0, file "/mnt/data/reverse_engineering_lab_python/demo_auth.py", line 30>:
+ 30           RESUME                   0
+
+ 32           LOAD_FAST                0 (valid)
+              TO_BOOL
+              POP_JUMP_IF_FALSE       12 (to L1)
+
+ 33           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               1 ('ACCESS GRANTED')
+              CALL                     1
+              POP_TOP
+              RETURN_CONST             3 (None)
+
+ 35   L1:     LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               2 ('ACCESS DENIED')
+              CALL                     1
+              POP_TOP
+              RETURN_CONST             3 (None)
+
+Disassembly of <code object main at 0x7f7b74380200, file "/mnt/data/reverse_engineering_lab_python/demo_auth.py", line 38>:
+ 38           RESUME                   0
+
+ 39           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               1 ('=== Reverse Engineering Lab: Authentication Demo ===')
+              CALL                     1
+              POP_TOP
+
+ 40           LOAD_GLOBAL              3 (input + NULL)
+              LOAD_CONST               2 ('Username: ')
+              CALL                     1
+              STORE_FAST               0 (username)
+
+ 41           LOAD_GLOBAL              5 (getpass + NULL)
+              LOAD_CONST               3 ('Password: ')
+              CALL                     1
+              STORE_FAST               1 (password)
+
+ 43           LOAD_GLOBAL              7 (validate_credentials + NULL)
+              LOAD_FAST_LOAD_FAST      1 (username, password)
+              CALL                     2
+              STORE_FAST               2 (valid)
+
+ 44           LOAD_GLOBAL              9 (show_result + NULL)
+              LOAD_FAST                2 (valid)
+              CALL                     1
+              POP_TOP
+
+ 45           LOAD_FAST                2 (valid)
+              TO_BOOL
+              POP_JUMP_IF_FALSE        2 (to L1)
+              LOAD_CONST               4 (0)
+              RETURN_VALUE
+      L1:     LOAD_CONST               5 (1)
+              RETURN_VALUE
+Spreadsheet runtime warmup failed during python startup
+Traceback (most recent call last):
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py", line 26, in warm_spreadsheet_runtime_on_startup
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 785, in warm_spreadsheet_runtime
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 718, in _warm_feature_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 509, in _warm_drawing_and_image_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/generated/interface/models.py", line 32861, in bring_to_front
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/remote.py", line 764, in __call__
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/client.py", line 175, in call
+artifact_tool.rpc.client.RemoteError: Element ordering requires an owning element collection.
